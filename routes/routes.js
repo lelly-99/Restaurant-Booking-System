@@ -16,7 +16,7 @@ export default function resturant_routes(data) {
     //select table
     const table = req.body.tableId;
     //book table
-    const book_table = await d.bookTable(
+    const book_table = await data.bookTable(
       username,
       number_of_people_booking,
       phone_number,
@@ -25,9 +25,9 @@ export default function resturant_routes(data) {
     //If the number of customers is bigger than the table's capacity the table can't be booked.
     //Show a flash error message in this scenario.
     if (book_table) {
-      req.flash("success", "Table booked successfully");
+      req.flash("success", "Table have been successfully books");
     } else {
-      req.flash("error", "Unable to book table");
+      req.flash("fail", "Could not book table");
     }
     //Redirect back to the / route - with the required flash message.
     res.redirect("/");

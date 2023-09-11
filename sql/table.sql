@@ -1,3 +1,7 @@
+
+
+
+
 CREATE TABLE table_booking (
     id serial not null primary key,
     table_name text not null,
@@ -5,8 +9,5 @@ CREATE TABLE table_booking (
     booked boolean not null,
     username text,
     number_of_people int,
-    contact_number int
+    contact_number text
 );
-
-
-

@@ -3,21 +3,13 @@
     <h2 class="title is-2">Book a table</h2>
 
     <div class="notification is-danger is-light">
-        {{!-- you can remove the button below if you want --}}
-        <button class="delete"></button>
-        Error Flash messages goes here...
-        <a href="https://bulma.io/documentation/elements/notification/">Read here if you wanna change the style</a>
+       {{!-- messaages --}}
+        <p class="msg">{{messages.fail}}</p>
     </div>
     <div class="notification is-success is-light">
-        {{!-- you can remove the button below if you want --}}
-        <button class="delete"></button>
-        Success Flash messages goes here...
-        <a href="https://bulma.io/documentation/elements/notification/">Read here if you wanna change the style</a>
+        <p class="msgs">{{messages.success}}</p>
     </div>
-
-
     <div class="columns">
-
         {{#each tables}}
 
         <div class="column">
@@ -104,3 +96,11 @@
     </div>
 </form>
 </div>
+
+<script>
+  setTimeout(function () { document.querySelector('is-danger').innerHTML = ''; },
+  3000);
+
+   setTimeout(function () { document.querySelector('is-success').innerHTML = ''; },
+  3000);
+</script> 
