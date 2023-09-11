@@ -25,16 +25,25 @@ export default function resturant_routes(data) {
     //If the number of customers is bigger than the table's capacity the table can't be booked.
     //Show a flash error message in this scenario.
     if (book_table) {
+    //booked tables should have reservations 
+    //render booked
       req.flash("success", "Table have been successfully books");
-    } else {
-      req.flash("fail", "Could not book table");
-    }
+    } else if (!number_of_people_booking) {
+      req.flash("fail", "Enter number of people");
+    } else if (!username) {
+    req.flash("fail", "Enter username");
+     } else if (!phone_number) {
+    req.flash("fail", "Enter phone number");
+  } else if (!table) {
+  req.flash("fail", "select table");
+  }
     //Redirect back to the / route - with the required flash message.
     res.redirect("/");
   }
 
   // Show all the booked tables
   async function post_book(req, res) {
+   
     const tables = await data.getBookedTables();
     res.render("bookings", { tables });
   }
