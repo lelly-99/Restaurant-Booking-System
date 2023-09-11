@@ -2,6 +2,8 @@ const restaurant = (db) => {
 
     async function getTables() {
         // get all the available tables
+        //select all from booking table, where the table is not booked
+        return await db.manyOrNone("SELECT * FROM table_booking WHERE booked = false");
     }
 
     async function bookTable(tableName) {
@@ -24,6 +26,9 @@ const restaurant = (db) => {
         // get user table booking
     }
 
+    async function editTableBooking(){
+
+    }
     return {
         getTables,
         bookTable,
