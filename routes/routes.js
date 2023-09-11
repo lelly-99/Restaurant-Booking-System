@@ -35,7 +35,7 @@ export default function resturant_routes(data) {
 
   // Show all the bookings made
   async function post_book(req, res) {
-    const tables = await restaurant_service.getBookedTables();
+    const tables = await data.getBookedTables();
     res.render("bookings", { tables });
   }
 
@@ -45,7 +45,7 @@ export default function resturant_routes(data) {
     const username = req.params.username;
     //Show all the bookings made by a given user
     // Allow booking cancellations
-    const tables = await restaurant_service.getBookedTablesForUser(username);
+    const tables = await data.getBookedTablesForUser(username);
     res.render("userBookings", { tables });
   }
 
@@ -53,7 +53,7 @@ export default function resturant_routes(data) {
     //require the body of the table in handlebars
     const table = reg.body.tableName;
     //Cancel the booking booking for the selected table.
-    await restaurant_service.cancelTableBooking(table);
+    await data.cancelTableBooking(table);
     //Redirect back to the /bookings screen.
     res.redirect("/bookings");
   }
