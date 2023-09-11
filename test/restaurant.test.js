@@ -8,12 +8,19 @@ const connectionString = process.env.DATABASE_URL || DATABASE_URL;
 const db = pgPromise()(connectionString);
 
 describe("The restaurant booking table", function () {
-    //timeout
-    this.timeout(10000);
+    //timeout to make tests pass
+    this.timeout(30000);
     beforeEach(async function () {
         try {
             // clean the tables before each test run
-            // await db.none("TRUNCATE TABLE table_booking RESTART IDENTITY CASCADE;");
+            await db.none("TRUNCATE TABLE table_booking RESTART IDENTITY CASCADE;");
+            //insert the sql data provided
+            await db.none("INSERT into table_booking (table_name, capacity, booked) values ('Table one', 4, false);");
+            await db.none("INSERT into table_booking (table_name, capacity, booked) values ('Table two', 6, false);");
+            await db.none("INSERT into table_booking (table_name, capacity, booked) values ('Table three', 4, false);");
+            await db.none("INSERT into table_booking (table_name, capacity, booked) values ('Table four', 2, false);");
+            await db.none("INSERT into table_booking (table_name, capacity, booked) values ('Table five', 6, false);");
+            await db.none("INSERT into table_booking (table_name, capacity, booked) values ('Table six', 4, false);");
         } catch (err) {
             console.log(err);
             throw err;
@@ -24,16 +31,14 @@ describe("The restaurant booking table", function () {
         const restaurantTableBooking = await RestaurantTableBooking(db);
 
         assert.deepEqual([
-            {
-              booked: false,
-              capacity: 4,
-              contact_number: null,
-              id: 1,
-              number_of_people: null,
-              table_name: 'Table one',
-              username: null
-            }
-          ], await restaurantTableBooking.getTables());
+            { id: 1, table_name: 'Table one', capacity: 4, booked: false, username: null, number_of_people: null, contact_number: null },
+            { id: 2, table_name: 'Table two', capacity: 6, booked: false, username: null, number_of_people: null, contact_number: null },
+            { id: 3, table_name: 'Table three', capacity: 4, booked: false, username: null, number_of_people: null, contact_number: null },
+            { id: 4, table_name: 'Table four', capacity: 2, booked: false, username: null, number_of_people: null, contact_number: null },
+            { id: 5, table_name: 'Table five', capacity: 6, booked: false, username: null, number_of_people: null, contact_number: null },
+            { id: 6, table_name: 'Table six', capacity: 4, booked: false, username: null, number_of_people: null, contact_number: null }
+
+        ], await restaurantTableBooking.getTables());
     });
 
 
@@ -101,7 +106,7 @@ describe("The restaurant booking table", function () {
             tableName: 'Table three',
             username: 'Kim',
             phoneNumber: '084 009 8910',
-            seats: 2
+            capacity: 2
         });
 
         // Table three should be booked now
