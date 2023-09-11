@@ -2,12 +2,14 @@ import assert from "assert"
 import RestaurantTableBooking from "../services/restaurant.js";
 import pgPromise from 'pg-promise';
 
-const DATABASE_URL = '';
+const DATABASE_URL = 'postgres://qgtbvckp:rvclmk79eXhageyYs9QHoyz7UBXFeVK8@silly.db.elephantsql.com/qgtbvckp?ssl=true';
 
 const connectionString = process.env.DATABASE_URL || DATABASE_URL;
 const db = pgPromise()(connectionString);
 
 describe("The restaurant booking table", function () {
+    //timeout
+    this.timeout(10000);
     beforeEach(async function () {
         try {
             // clean the tables before each test run
@@ -21,7 +23,17 @@ describe("The restaurant booking table", function () {
     it("Get all the available tables", async function () {
         const restaurantTableBooking = await RestaurantTableBooking(db);
 
-        assert.deepEqual([{}, {}, {}, {}, {}], await restaurantTableBooking.getTables());
+        assert.deepEqual([
+            {
+              booked: false,
+              capacity: 4,
+              contact_number: null,
+              id: 1,
+              number_of_people: null,
+              table_name: 'Table one',
+              username: null
+            }
+          ], await restaurantTableBooking.getTables());
     });
 
 
