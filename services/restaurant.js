@@ -29,6 +29,7 @@ const restaurant = (db) => {
     async function getBookedTables() {
         // get all the booked tables
         // select tables where booked is true
+        return await db.manyOrNone("SELECT * FROM table_booking WHERE booked = true");
 
     }
 

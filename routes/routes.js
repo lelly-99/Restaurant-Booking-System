@@ -33,7 +33,7 @@ export default function resturant_routes(data) {
     res.redirect("/");
   }
 
-  // Show all the bookings made
+  // Show all the booked tables
   async function post_book(req, res) {
     const tables = await data.getBookedTables();
     res.render("bookings", { tables });
